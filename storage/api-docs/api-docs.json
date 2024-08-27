@@ -1,0 +1,1285 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "PezeshkHub super ApplicationAPI",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/auth/check-mobile": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Check mobile number and send verification code",
+                "description": "Check user mobile_number on database for check availability for login or register.",
+                "operationId": "a5bb33b25d7d64d72286f4ab6f1b55c5",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "country_code",
+                                    "mobile_number"
+                                ],
+                                "properties": {
+                                    "country_code": {
+                                        "description": "User country code without zero. Example: 98",
+                                        "type": "string",
+                                        "example": "98"
+                                    },
+                                    "mobile_number": {
+                                        "description": "User mobile number with standard format without country code and zero. Example: 9356350256",
+                                        "type": "string",
+                                        "example": "9356350256"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Code sent successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Code Sent"
+                                        },
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 1234
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "example": {
+                                                "mobile_number": [
+                                                    "The mobile number field is required."
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Internal Server Error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/login-otp": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login user with otp code",
+                "description": "after check mobile_number, if user exist send OTP code",
+                "operationId": "255feb3024838d9c4fcb95dd02c7c289",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "country_code",
+                                    "mobile_number",
+                                    "otp"
+                                ],
+                                "properties": {
+                                    "country_code": {
+                                        "description": "User country code without zero. Example: 98",
+                                        "type": "string",
+                                        "example": "98"
+                                    },
+                                    "mobile_number": {
+                                        "description": "User mobile number with standard format without country code and zero. Example: 9356350256",
+                                        "type": "string",
+                                        "example": "9356350256"
+                                    },
+                                    "otp": {
+                                        "description": "OTP code received from SMS or call",
+                                        "type": "string",
+                                        "example": "1234"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "some-jwt-token"
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "workarea_education_id": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "username": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "fullname": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "fullname_fa": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "firstname": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "firstname_fa": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "lastname": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "lastname_fa": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "about": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "avatar_url": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "medical_id": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "national_id": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "mobile_number": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "country_code": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "phone_verified_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-06-27T08:06:47.051Z"
+                                                },
+                                                "is_mobile_verify": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "is_user_verify": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "is_staff": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "email_verified_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-06-27T08:06:47.051Z"
+                                                },
+                                                "fcm_token": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "ws_token": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "birthday": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "city": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "country": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "gender": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "active": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "timezone": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "language": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Internal Server Error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/resend-otp": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Resend OTP code",
+                "description": "after 60 seconds user request new otp code as sms or call. type= sms/call string",
+                "operationId": "a91d1e9eb6b132891023e349e7a0fc3a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "country_code": {
+                                        "description": "User country code without zero. Example: 98",
+                                        "type": "string",
+                                        "example": "98"
+                                    },
+                                    "mobile_number": {
+                                        "description": "User mobile number with standard format without country code and zero. Example: 9356350256",
+                                        "type": "string",
+                                        "example": "9356350256"
+                                    },
+                                    "type": {
+                                        "description": "Resend OTP can use both SMS & call, type can only be set to 'sms' or 'call'. Example: call",
+                                        "type": "string",
+                                        "example": "call"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Code Sent"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/auth/logout": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User logout request send from here",
+                "description": "User logout request send from here",
+                "operationId": "1c0b7f06e82592b86f4eff545d1c4276",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Logout Successful"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/Register": {
+            "post": {
+                "tags": [
+                    "Register"
+                ],
+                "summary": "User Register",
+                "description": "User Register here",
+                "operationId": "27884b2dc86e7260995c885ab368e4dd",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "username": {
+                                        "description": "Unique username without space and unexpected chars",
+                                        "type": "string",
+                                        "example": "john_doe"
+                                    },
+                                    "country_code": {
+                                        "description": "User country code without zero",
+                                        "type": "string",
+                                        "example": "98"
+                                    },
+                                    "mobile_number": {
+                                        "description": "User mobile number with standard format without country code and zero",
+                                        "type": "string",
+                                        "example": "9356350256"
+                                    },
+                                    "password": {
+                                        "description": "8-30 char string password",
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "string"
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "workarea_education_id": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "username": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "fullname": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "fullname_fa": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "firstname": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "firstname_fa": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "lastname": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "lastname_fa": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "about": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "avatar_url": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "medical_id": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "national_id": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "mobile_number": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "country_code": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "phone_verified_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-06-27T18:29:23.972Z"
+                                                },
+                                                "is_mobile_verify": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "is_user_verify": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "is_staff": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "email_verified_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-06-27T18:29:23.972Z"
+                                                },
+                                                "fcm_token": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "ws_token": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "birthday": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "city": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "country": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "gender": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "active": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "timezone": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "language": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Dear user, you have already registered"
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/Register/verifyOtp": {
+            "post": {
+                "tags": [
+                    "Register"
+                ],
+                "summary": "User Register VerifyOtp",
+                "description": "User Register Verify otp request send from here",
+                "operationId": "676b533fbd1dc5158dd334eac28d6f68",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "otp": {
+                                        "description": "OTP code received from SMS or call",
+                                        "type": "string",
+                                        "example": "1234"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "OTP verified successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/Home": {
+            "get": {
+                "tags": [
+                    "Home"
+                ],
+                "summary": "Home API for initializing app",
+                "description": "Home API for initializing app",
+                "operationId": "4b0165c7e123468a9a7b3523c0094155",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number of the results (default is 1)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "current_page": {
+                                                        "type": "integer",
+                                                        "example": 0
+                                                    },
+                                                    "total": {
+                                                        "type": "integer",
+                                                        "example": 0
+                                                    },
+                                                    "data": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 0
+                                                                },
+                                                                "user_id": {
+                                                                    "type": "integer",
+                                                                    "example": 0
+                                                                },
+                                                                "description": {
+                                                                    "type": "string",
+                                                                    "example": "string"
+                                                                },
+                                                                "media": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer",
+                                                                                "example": 0
+                                                                            },
+                                                                            "title": {
+                                                                                "type": "string",
+                                                                                "example": "string"
+                                                                            },
+                                                                            "type": {
+                                                                                "type": "string",
+                                                                                "example": "string"
+                                                                            },
+                                                                            "source": {
+                                                                                "type": "string",
+                                                                                "example": "string"
+                                                                            },
+                                                                            "dimensions": {
+                                                                                "type": "string",
+                                                                                "example": "string"
+                                                                            },
+                                                                            "media_url": {
+                                                                                "type": "string",
+                                                                                "example": "string"
+                                                                            },
+                                                                            "order": {
+                                                                                "type": "integer",
+                                                                                "example": 0
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                },
+                                                                "user": {
+                                                                    "properties": {
+                                                                        "id": {
+                                                                            "type": "integer",
+                                                                            "example": 0
+                                                                        },
+                                                                        "workarea_education_id": {
+                                                                            "type": "integer",
+                                                                            "example": 0
+                                                                        },
+                                                                        "username": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        },
+                                                                        "fullname": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        },
+                                                                        "fullname_fa": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        },
+                                                                        "firstname": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        },
+                                                                        "firstname_fa": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        },
+                                                                        "lastname": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        },
+                                                                        "lastname_fa": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        },
+                                                                        "about": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        },
+                                                                        "avatar_url": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        },
+                                                                        "medical_id": {
+                                                                            "type": "integer",
+                                                                            "example": 0
+                                                                        },
+                                                                        "national_id": {
+                                                                            "type": "integer",
+                                                                            "example": 0
+                                                                        },
+                                                                        "mobile_number": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        },
+                                                                        "country_code": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        },
+                                                                        "phone_verified_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2024-06-27T20:40:17.473Z"
+                                                                        },
+                                                                        "is_mobile_verify": {
+                                                                            "type": "integer",
+                                                                            "example": 0
+                                                                        },
+                                                                        "is_user_verify": {
+                                                                            "type": "integer",
+                                                                            "example": 0
+                                                                        },
+                                                                        "is_staff": {
+                                                                            "type": "integer",
+                                                                            "example": 0
+                                                                        },
+                                                                        "email": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        },
+                                                                        "email_verified_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2024-06-27T20:40:17.473Z"
+                                                                        },
+                                                                        "fcm_token": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        },
+                                                                        "ws_token": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        },
+                                                                        "birthday": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        },
+                                                                        "city": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        },
+                                                                        "country": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        },
+                                                                        "gender": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        },
+                                                                        "active": {
+                                                                            "type": "integer",
+                                                                            "example": 0
+                                                                        },
+                                                                        "timezone": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        },
+                                                                        "language": {
+                                                                            "type": "string",
+                                                                            "example": "string"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tag not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        },
+        "/api/Post/create": {
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Create a new post",
+                "description": "Create a new post with media uploads",
+                "operationId": "6a3d773bf63bd76fe2be4125b9515f15",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "description": {
+                                        "description": "Description of the post",
+                                        "type": "string",
+                                        "example": "This is a sample post"
+                                    },
+                                    "media_upload": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Post created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "success": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "registered": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Miss media",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "miss media"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Post/like": {
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Like a post",
+                "description": "Like a post",
+                "operationId": "9a897421f5ff6de3c0ffe38204aa0b27",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "post_id": {
+                                        "description": "Post ID for like",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "liked": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "like_count": {
+                                            "type": "integer",
+                                            "example": 0
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/Profile/show": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "profile api get profile detail",
+                "description": "profile api get profile detail",
+                "operationId": "f18acee7b0143923d1a8b7d91ddbca5e",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "user_id for get profile detail",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "workarea_education_id": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "username": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "fullname": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "fullname_fa": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "firstname": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "firstname_fa": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "lastname": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "lastname_fa": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "about": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "avatar_url": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "medical_id": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "national_id": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "mobile_number": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "country_code": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "phone_verified_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-06-27T20:29:58.770Z"
+                                                },
+                                                "is_mobile_verify": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "is_user_verify": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "is_staff": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "email_verified_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-06-27T20:29:58.770Z"
+                                                },
+                                                "fcm_token": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "ws_token": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "birthday": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "city": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "country": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "gender": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "active": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "timezone": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                },
+                                                "language": {
+                                                    "type": "string",
+                                                    "example": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tag not found"
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            }
+        }
+    }
+}
